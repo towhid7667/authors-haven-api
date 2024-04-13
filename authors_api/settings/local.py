@@ -3,7 +3,7 @@ from .base import env
 
 
 
-SECRET_KEY = env("DJANGO_SECRET_KEY", default = "Qn_jPjlguugAmX-eifchMO2-cfemzToJhk97j13UG7KxepDUqmc")
+SECRET_KEY = env("DJANGO_SECRET_KEY", default = "Qn_jPjlguugAmX-eifchMO2-cfemzToJhk97j13UG7KxepDUqmc",)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

@@ -78,14 +78,14 @@ WSGI_APPLICATION = "authors_api.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": "mydatabase",
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "mydatabase",
+    }
+}
 
-DATABASE = {"default" : env.db("DATABASE_URL")}
+# DATABASE = {"default" : env.db("DATABASE_URL")}
 
 # DATABASES = {"default": env.db("DATABASE_URL")}
 
