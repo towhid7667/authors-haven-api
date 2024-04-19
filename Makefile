@@ -10,7 +10,7 @@ show-logs:
 show-logs-api:
 	docker compose -f local.yml up logs api
 makemigrations:
-	docker compose -f local.yml run --rm api python manage.py makemigratons
+	docker compose -f local.yml run --rm api python manage.py makemigrations
 migrate:
 	docker compose -f local.yml run --rm api python manage.py migrate
 collectstatic:
