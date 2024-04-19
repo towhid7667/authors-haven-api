@@ -8,6 +8,10 @@ django-countries
 django-phonenumber-field
 phonenumbers
 drf-yasg
+redis==4.5.1
+celery==5.2.7
+flower==1.2.0
+django-celery-email==3.0.0
 
 Pillow
 
