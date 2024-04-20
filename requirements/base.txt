@@ -18,5 +18,9 @@ Pillow
 argon2-cffi
 pytz
 django-taggit
+django-allauth
+djangorestframework-simplejwt
+dj-rest-auth
+
 
 
