@@ -16,7 +16,7 @@ class Article(TimeStampModel):
     slug = AutoSlugField(populate_from="title", always_update=True, unique=True)
     description = models.CharField(verbose_name=_("Description"), max_length=255)
     body = models.TextField(verbose_name=_("article content"))
-    banner_image = models.ImageField(verbose_name=_("banner image"), default="profile_default.png")
+    banner_image = models.ImageField(verbose_name=_("banner image"), default="/profile_default.png")
     tags = TaggableManager()
 
     def __str__(self):
@@ -28,6 +28,14 @@ class Article(TimeStampModel):
 
     def view_count(self):
         return self.article_views.count()
+
+    def average_rating(self):
+        ratings = self.ratings.all()
+        if ratings.count() > 0:
+            total_rating = sum(rating.rating for rating in ratings)
+            average_rating = total_rating / ratings.count()
+            return round(average_rating, 2)
+        return None
 
 
 class ArticleView(TimeStampModel):
