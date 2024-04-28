@@ -13,3 +13,8 @@ class CustomUserDetailsView(RetrieveAPIView):
 
     def get_queryset(self):
         return get_user_model().objects.none()
+
+
+
+# kkk@mail.com
+# kkklll

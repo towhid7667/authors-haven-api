@@ -39,3 +39,6 @@ isort-diff:
 
 isort:
 	docker compose -f local.yml exec api isort . --skip venv --skip migrations
+
+delete-superusers:
+	docker compose -f local.yml run --rm api python manage.py deletesuperusers

@@ -32,6 +32,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 
     def get_average_rating(self, obj):
         return obj.average_rating()
+
     def get_views(self, obj):
         return ArticleView.objects.filter(article=obj).count()
 
@@ -47,6 +48,27 @@ class ArticleSerializer(serializers.ModelSerializer):
         then = obj.updated_at
         formatted_date = then.strftime("%m/%d/%Y, %H:%M:%S")
         return formatted_date
+
+    def create(self, validated_data):
+        tags = validated_data.pop("tags", [])
+        article = Article.objects.create(**validated_data)
+        article.tags.set(tags)
+        return article
+
+    def update(self, instance, validated_data):
+        instance.author = validated_data.get("author", instance.author)
+        instance.title = validated_data.get("title", instance.title)
+        instance.description = validated_data.get("description", instance.description)
+        instance.body = validated_data.get("body", instance.body)
+        instance.banner_image = validated_data.get("banner_image", instance.banner_image)
+
+        tags = validated_data.pop("tags", [])
+        instance.tags.clear()
+        if "tags" in validated_data:
+            instance.tags.set(validated_data["tags"])
+
+        instance.save()
+        return instance
 
     class Meta:
         model = Article
@@ -65,27 +87,4 @@ class ArticleSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
-        read_only_fields = ["id", "slug", "estimated_reading_time", "views", "auth_info", "created_at", "updated_at"]
 
-    def create(self, validated_data):
-        tags = validated_data.pop("tags", [])
-        article = Article.objects.create(**validated_data)
-
-        for tag in tags:
-            article.tags.add(tag)
-
-        return article
-
-    def update(self, instance, validated_data):
-        instance.title = validated_data.get("title", instance.title)
-        instance.description = validated_data.get("description", instance.description)
-        instance.body = validated_data.get("body", instance.body)
-        instance.banner_image = validated_data.get("banner_image", instance.banner_image)
-
-        tags = validated_data.pop("tags", [])
-        instance.tags.clear()
-        for tag in tags:
-            instance.tags.add(tag)
-
-        instance.save()
-        return instance
