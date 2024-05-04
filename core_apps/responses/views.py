@@ -1,10 +1,9 @@
-from django.shortcuts import render
-from rest_framework import generics
+from django.shortcuts import get_object_or_404, render
+from rest_framework import generics, permissions
+from rest_framework.exceptions import PermissionDenied
+
 from .models import Article, Responses
 from .serializers import ResponseSerializer
-from rest_framework.exceptions import PermissionDenied
-from rest_framework import permissions
-from django.shortcuts import get_object_or_404
 
 
 class ResponseListCreateView(generics.ListCreateAPIView):
@@ -13,12 +12,12 @@ class ResponseListCreateView(generics.ListCreateAPIView):
     serializer_class = ResponseSerializer
 
     def get_queryset(self):
-        article_id = self.kwargs.get('article_id')
+        article_id = self.kwargs.get("article_id")
         return Responses.objects.filter(article__id=article_id, parent_response=None)
 
     def perform_create(self, serializer):
         user = self.request.user
-        article_id = self.kwargs.get('article_id')
+        article_id = self.kwargs.get("article_id")
         article = get_object_or_404(Article, id=article_id)
         serializer.save(user=user, article=article)
 
@@ -34,7 +33,6 @@ class ResponseUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
         if user != response.user:
             raise PermissionDenied("You don't have permission to edit this response")
         serializer.save()
-
 
     def perform_destroy(self, instance):
         user = self.request.user

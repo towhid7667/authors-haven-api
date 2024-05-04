@@ -1,15 +1,18 @@
-from django.db import models
 from django.contrib.auth import get_user_model
-from core_apps.common.models import TimeStampModel
-from core_apps.articles.models import Article
+from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+from core_apps.articles.models import Article
+from core_apps.common.models import TimeStampModel
 
 User = get_user_model()
 
 
 class Responses(TimeStampModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="responses")
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name="responses")
+    article = models.ForeignKey(
+        Article, on_delete=models.CASCADE, related_name="responses"
+    )
     parent_responses = (
         models.ForeignKey(
             "self",

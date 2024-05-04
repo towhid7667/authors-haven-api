@@ -1,10 +1,11 @@
-from django.db import models
 from autoslug import AutoSlugField
 from django.contrib.auth import get_user_model
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 from taggit.managers import TaggableManager
 
 from core_apps.common.models import TimeStampModel
+
 from .read_time_engine import ArticleReadTimeEngine
 
 User = get_user_model()
@@ -28,7 +29,9 @@ class Article(TimeStampModel):
     slug = AutoSlugField(populate_from="title", always_update=True, unique=True)
     description = models.CharField(verbose_name=_("Description"), max_length=255)
     body = models.TextField(verbose_name=_("article content"))
-    banner_image = models.ImageField(verbose_name=_("banner image"), default="/profile_default.png")
+    banner_image = models.ImageField(
+        verbose_name=_("banner image"), default="/profile_default.png"
+    )
     tags = TaggableManager()
     claps = models.ManyToManyField(User, through=Clap, related_name="clapped_article")
 
@@ -52,9 +55,15 @@ class Article(TimeStampModel):
 
 
 class ArticleView(TimeStampModel):
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name="article_views")
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="user_views")
-    viewer_ip = models.GenericIPAddressField(verbose_name=_("viewer ip"), null=True, blank=True)
+    article = models.ForeignKey(
+        Article, on_delete=models.CASCADE, related_name="article_views"
+    )
+    user = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, related_name="user_views"
+    )
+    viewer_ip = models.GenericIPAddressField(
+        verbose_name=_("viewer ip"), null=True, blank=True
+    )
 
     class Meta:
         verbose_name = _("Article View")
@@ -66,5 +75,7 @@ class ArticleView(TimeStampModel):
 
     @classmethod
     def record_view(cls, article, user, viewer_ip):
-        view, _ = cls.objects.get_or_create(article=article, user=user, viewer_ip=viewer_ip)
+        view, _ = cls.objects.get_or_create(
+            article=article, user=user, viewer_ip=viewer_ip
+        )
         view.save()

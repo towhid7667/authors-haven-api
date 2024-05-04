@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 
 from core_apps.articles.models import Article
 from core_apps.common.models import TimeStampModel
@@ -16,7 +16,9 @@ class Rating(TimeStampModel):
         (5, "Excellent"),
     ]
 
-    article = models.ForeignKey(Article, related_name='ratings', on_delete=models.CASCADE)
+    article = models.ForeignKey(
+        Article, related_name="ratings", on_delete=models.CASCADE
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.PositiveIntegerField(choices=RATING_CHOICES)
     review = models.TextField(blank=True)

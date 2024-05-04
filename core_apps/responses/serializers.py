@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from .models import Responses
 
 
@@ -15,4 +16,3 @@ class ResponseSerializer(serializers.ModelSerializer):
             "content",
             "created_at",
         ]
-

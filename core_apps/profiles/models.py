@@ -1,8 +1,9 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
+
 from core_apps.common.models import TimeStampModel
 
 User = get_user_model()
@@ -11,15 +12,15 @@ User = get_user_model()
 class Profile(TimeStampModel):
     class Gender(models.TextChoices):
         MALE = (
-            "M", _("Male"),
+            "M",
+            _("Male"),
         )
 
-        FEMALE = (
-            "F", _("Female")
-        )
+        FEMALE = ("F", _("Female"))
 
         OTHER = (
-            "O", _("Other"),
+            "O",
+            _("Other"),
         )
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
@@ -33,19 +34,14 @@ class Profile(TimeStampModel):
         verbose_name=_("gender"),
         choices=Gender.choices,
         default=Gender.OTHER,
-        max_length=20
-
+        max_length=20,
     )
 
     country = CountryField(
         verbose_name=_("country"), default="BD", blank=False, null=False
     )
     city = models.CharField(
-        verbose_name=_("city"),
-        max_length=180,
-        default="Dhaka",
-        blank=False, null=False
-
+        verbose_name=_("city"), max_length=180, default="Dhaka", blank=False, null=False
     )
 
     profile_photo = models.ImageField(

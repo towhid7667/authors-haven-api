@@ -1,5 +1,6 @@
 from django_countries.serializer_fields import CountryField
 from rest_framework import serializers
+
 from .models import Profile
 
 
@@ -13,9 +14,19 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ["id", "first_name", "last_name", "full_name", "email", "profile_photo", "phone_number", "gender",
-                  "country",
-                  "twitter_handle", "about_me"]
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "full_name",
+            "email",
+            "profile_photo",
+            "phone_number",
+            "gender",
+            "country",
+            "twitter_handle",
+            "about_me",
+        ]
 
     def get_full_name(self, obj):
         first_name = obj.user.first_name.title()
@@ -38,7 +49,7 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
             "gender",
             "country",
             "city",
-            "twitter_handle"
+            "twitter_handle",
         ]
 
 
@@ -48,4 +59,10 @@ class FollowingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ["first_name", "last_name", "profile_photo", "twitter_handle", "about_me"]
+        fields = [
+            "first_name",
+            "last_name",
+            "profile_photo",
+            "twitter_handle",
+            "about_me",
+        ]

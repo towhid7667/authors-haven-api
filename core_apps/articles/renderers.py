@@ -1,9 +1,10 @@
 import json
+
 from rest_framework.renderers import JSONRenderer
 
 
 class ArticleJsonRenderer(JSONRenderer):
-    charset = 'utf-8'
+    charset = "utf-8"
 
     def render(self, data, accepted_media_type=None, renderer_context=None):
         if renderer_context is None:
@@ -22,7 +23,7 @@ class ArticleJsonRenderer(JSONRenderer):
 
 
 class ArticlesJsonRenderer(JSONRenderer):
-    charset = 'utf-8'
+    charset = "utf-8"
 
     def render(self, data, accepted_media_type=None, renderer_context=None):
         status_code = renderer_context["response"].status_code

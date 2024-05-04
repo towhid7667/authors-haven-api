@@ -1,7 +1,8 @@
-from .serializers import UserSerializer
+from django.contrib.auth import get_user_model
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth import get_user_model
+
+from .serializers import UserSerializer
 
 
 class CustomUserDetailsView(RetrieveAPIView):
@@ -13,7 +14,6 @@ class CustomUserDetailsView(RetrieveAPIView):
 
     def get_queryset(self):
         return get_user_model().objects.none()
-
 
 
 # kkk@mail.com
