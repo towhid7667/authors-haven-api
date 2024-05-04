@@ -42,3 +42,6 @@ isort:
 
 delete-superusers:
 	docker compose -f local.yml run --rm api python manage.py deletesuperusers
+
+elastic-search:
+	docker compose -f local.yml exec api python manage.py search_index --rebuild
