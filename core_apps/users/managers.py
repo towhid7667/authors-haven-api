@@ -47,7 +47,7 @@ class CustomUserManager(BaseUserManager):
             email = self.normalize_email(email)
             self.email_validator(email)
         else:
-            raise ValueError(_("User must have an email"))
+            raise ValueError(_("Superuser must have an email"))
         user = self.create_user(first_name, last_name, email, password, **extra_fields)
         user.save(using=self._db)
         return user
