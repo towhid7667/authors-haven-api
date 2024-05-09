@@ -7,6 +7,7 @@ faker = FakerFactory.create()
 
 User = get_user_model()
 
+
 @factory.django.mute_signals(post_save)
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
